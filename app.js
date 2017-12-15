@@ -28,4 +28,10 @@ app.use(passport.session());
 
 app.use('/account', account);
 
+app.get('/account', function (req, res) {
+  res.send("");
+});
+app.get('/',function (req,res){
+	res.send("");
+});
 app.listen(3000, () => console.log('Listening on localhost:3000'));
