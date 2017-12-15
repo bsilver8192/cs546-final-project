@@ -14,6 +14,7 @@ const mongoConnection = require('./mongoConnection');
 
 // Promises which will resolve to each of the relevant collections.
 module.exports = {
-	data: mongoConnection.then(connection =>
-				  connection.collection('data')),
+	user: mongoConnection.then(connection => connection.collection('user')),
+	document: mongoConnection.then(connection =>
+			connection.collection('document')),
 };
