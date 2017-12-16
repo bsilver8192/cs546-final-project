@@ -16,6 +16,8 @@ const bodyParser = require('body-parser');
 
 const account = require('./account');
 
+const search = require('./search.js');
+
 let app = express();
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
@@ -31,10 +33,18 @@ app.use('/account', account);
 
 //Handlers for the search
 app.get('/search',function(req,res){
-
+	res.render('search',{});
 });
 
 app.post('/search',function(req,res){
-
+	search.search(req).then((results,error)=>{
+		if(error){
+			req.render('search',{
+				error:error
+			});
+		}else{
+			req.render('search',{results:results});
+		}
+	});
 });
 app.listen(3000, () => console.log('Listening on localhost:3000'));

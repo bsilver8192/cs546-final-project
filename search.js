@@ -48,14 +48,36 @@ const search = (req)=>{
 				reject("No Results");
 				return;
 			}
-			var output = new Array();
+			var matches = new Array();
 			for(var i = 0;i<results.length;i++){
 				for(var j = 0;j<results[i].model_numbers.length;j++){
 					if(results[i].model_numbers[j] == req.body.part_no){
-						output.push(results[i]);
+						matches.push(results[i]);
 					}
 				}
 			}
+			if(matches.length == 0){
+				reject("No Results");
+			}
+			var output = "";
+			//construct the html
+			for(var i = 0;i<matches.length;i++){
+				output += "<div class=\"result\">"+
+							"<p><span>Location: </span>"+matches[i].url+"</p>"+
+							"<ul>"+
+							"<li><span>Model Numbers<span></li>";
+				for(var j = 0;j<matches[i].model_numbers.length;j++){
+					output += "<li>"+ matches[i].model_numbers[j]+"</li>";
+
+				}
+				output +=	"</ul>"+
+							"<p><span>Manufacturer: </span>"+matches[i].manufacturer+"</p>"+
+						 	"<p><span>Document Type: </span>"+matches[i].documentType+"</p>"+
+						 	"<p><span>Uploader: </span>" + matches[i].uploader +"</p>"+
+						 +"</div>";
+
+			}
+
 			resolve(output);
 		});
 
