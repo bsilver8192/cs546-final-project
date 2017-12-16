@@ -116,4 +116,9 @@ router.get('/create', function(req, res) {
 	res.render('create_account', params);
 });
 
+router.get('/logout', async (req, res) => {
+	await req.session.destroy();
+	res.redirect('/');
+});
+
 module.exports = router;
