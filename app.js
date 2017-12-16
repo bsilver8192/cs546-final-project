@@ -29,6 +29,7 @@ app.use(passport.session());
 
 app.use('/account', account);
 app.use('/document', document);
+app.use('/static', express.static('static'));
 
 app.get('/account', function (req, res) {
   res.send("");
