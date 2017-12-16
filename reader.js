@@ -15,7 +15,7 @@ const load_page = (page,data)=>{
 			case "add":
 				break;
 			case "lookup":
-			
+				break;
 		}
 	});
 }
