@@ -23,7 +23,7 @@ async function doLocalCallback(req, username, password) {
 	if (user == null) {
 		return [null, false, {message: 'Unrecognized username ' + username}];
 	}
-	const passwordMatches = await bcrypt.compare(password, user.password);
+	const passwordMatches = await bcrypt.compare(password, user.hashedPassword);
 	if (passwordMatches) {
 		return [null, user];
 	} else {
@@ -86,7 +86,7 @@ async function doCreateAccount(req, res) {
 		_id: uuid(),
 		name: form.name,
 		username: form.username,
-		password: await bcrypt.hash(form.password, 16),
+		hashedPassword: await bcrypt.hash(form.password, 16),
 	};
 	const r = await userCollection.insertOne(user);
 	if (r.insertedCount != 1) {
