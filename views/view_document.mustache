@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!-- I pledge my honor that I have abided by the Stevens Honor System.
+       - Brian Silverman
+       - Nathaniel Blakely
+       - Michael Watson -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>View document</title>
+	</head>
+	<body>
+		<header>
+			<h1>View document {{document.manufacturer}} {{document.documentType}}</h1>
+		</header>
+		<main>
+		<section>
+			<ul>
+				{{#document.model_numbers}}
+				<li><a href='{{document.url}}'>{{.}}</a></li>
+				{{/document.model_numbers}}
+			</ul>
+		</section>
+		<section>
+			This document was uploaded by {{uploader.name}}.
+		</section>
+		</main>
+	</body>
+</html>

@@ -15,6 +15,7 @@ const mustacheExpress = require('mustache-express');
 const bodyParser = require('body-parser');
 
 const account = require('./account');
+const document = require('./document');
 
 let app = express();
 app.engine('mustache', mustacheExpress());
@@ -27,6 +28,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/account', account);
+app.use('/document', document);
 
 app.get('/account', function (req, res) {
   res.send("");
