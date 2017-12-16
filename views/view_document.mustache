@@ -6,29 +6,23 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Log in</title>
+		<title>View document</title>
 	</head>
 	<body>
 		{{> navigation }}
 		<header>
-			<h1>Log in</h1>
+			<h1>View document {{document.manufacturer}} {{document.documentType}}</h1>
 		</header>
 		<main>
-		{{#error}}
-		<section class=error>
-			{{.}}
-		</section>
-		{{/error}}
 		<section>
-			<form method=post action=login>
-				<label>Username <input type=text name=username></label>
-				<label>Password <input type=password name=password></label>
-				<input type=submit value='Log in'>
-			</form>
+			<ul>
+				{{#document.model_numbers}}
+				<li><a href='{{document.url}}'>{{.}}</a></li>
+				{{/document.model_numbers}}
+			</ul>
 		</section>
 		<section>
-			If you don't already have one, please
-			<a href=create>create an account</a>.
+			This document was uploaded by {{uploader.name}}.
 		</section>
 		</main>
 		<script src=/static/tota11y.min.js></script>

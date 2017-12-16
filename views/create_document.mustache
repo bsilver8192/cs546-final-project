@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!-- I pledge my honor that I have abided by the Stevens Honor System.
+       - Brian Silverman
+       - Nathaniel Blakely
+       - Michael Watson -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Create document</title>
+	</head>
+	<body>
+		{{> navigation }}
+		<header>
+			<h1>Create document</h1>
+		</header>
+		<main>
+		{{#error}}
+		<section class=error>
+			{{.}}
+		</section>
+		{{/error}}
+		<section>
+			Create a new document so you and others can access it in the future.
+		</section>
+		<section>
+			<form method=post action=create>
+				<label>URL of the document <input type=url name=url required></label>
+				<label>Applicable model numbers <input type=text name=models required></label>
+				<label>Manufacturer <input type=text name=manufacturer required></label>
+				Document type
+				<label>Datasheet <input type=radio name=type value=datasheet></label>
+				<label>Reference manual <input type=radio name=type value=reference></label>
+				<label>Application node <input type=radio name=type value=note></label>
+				<label>Other <input type=radio name=type value=other></label>
+				<input type=submit value='Create document'>
+			</form>
+		</section>
+		</main>
+		<script src=/static/tota11y.min.js></script>
+	</body>
+</html>

@@ -23,7 +23,7 @@ async function doLocalCallback(req, username, password) {
 	if (user == null) {
 		return [null, false, {message: 'Unrecognized username ' + username}];
 	}
-	const passwordMatches = await bcrypt.compare(password, user.password);
+	const passwordMatches = await bcrypt.compare(password, user.hashedPassword);
 	if (passwordMatches) {
 		return [null, user];
 	} else {
@@ -54,7 +54,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 router.post('/login', passport.authenticate('local', {
-	successRedirect: '/',
+	successReturnToOrRedirect: '/',
 	failureRedirect: 'login',
 	failureFlash: true,
 }));
@@ -63,10 +63,14 @@ router.get('/login', function(req, res) {
 		res.render('login', {
 			error:
 				`You are already logged in, ${req.user.name}`,
+			user: req.user,
 		});
 		return;
 	}
-	res.render('login', { error: req.flash('error') });
+	res.render('login', {
+		error: req.flash('error'),
+		user: req.user,
+	});
 });
 async function doCreateAccount(req, res) {
 	const form = req.body;
@@ -86,7 +90,7 @@ async function doCreateAccount(req, res) {
 		_id: uuid(),
 		name: form.name,
 		username: form.username,
-		password: await bcrypt.hash(form.password, 16),
+		hashedPassword: await bcrypt.hash(form.password, 16),
 	};
 	const r = await userCollection.insertOne(user);
 	if (r.insertedCount != 1) {
@@ -101,7 +105,9 @@ router.post('/create', async (req, res) => {
 });
 router.get('/create', function(req, res) {
 	const errors = req.flash('error');
-	let params = {};
+	let params = {
+		user: req.user,
+	};
 	if (errors.length == 0) {
 		const success = req.flash('success');
 		if (success.length != 0) {
@@ -114,6 +120,11 @@ router.get('/create', function(req, res) {
 		params['error'] = errors;
 	}
 	res.render('create_account', params);
+});
+
+router.get('/logout', async (req, res) => {
+	await req.session.destroy();
+	res.redirect('/');
 });
 
 module.exports = router;

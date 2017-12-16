@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<!-- I pledge my honor that I have abided by the Stevens Honor System.
+       - Brian Silverman
+       - Nathaniel Blakely
+       - Michael Watson -->
+<navigation>
+{{#user}}
+Welcome, {{name}}. <a href=/account/logout>log out</a>
+{{/user}}
+{{^user}}
+Welcome, guest. If you want to create documents or save favorites, you will need
+to <a href=/account/login>log in</a> first.
+{{/user}}
+</navigation>

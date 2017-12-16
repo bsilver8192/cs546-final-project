@@ -15,6 +15,7 @@ const mustacheExpress = require('mustache-express');
 const bodyParser = require('body-parser');
 
 const account = require('./account');
+const document = require('./document');
 
 const search = require('./search.js');
 
@@ -29,6 +30,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/account', account);
+app.use('/document', document);
+app.use('/static', express.static('static'));
 
 
 //Handlers for the search
