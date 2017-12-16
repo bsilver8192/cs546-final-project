@@ -63,10 +63,14 @@ router.get('/login', function(req, res) {
 		res.render('login', {
 			error:
 				`You are already logged in, ${req.user.name}`,
+			user: req.user,
 		});
 		return;
 	}
-	res.render('login', { error: req.flash('error') });
+	res.render('login', {
+		error: req.flash('error'),
+		user: req.user,
+	});
 });
 async function doCreateAccount(req, res) {
 	const form = req.body;
@@ -101,7 +105,9 @@ router.post('/create', async (req, res) => {
 });
 router.get('/create', function(req, res) {
 	const errors = req.flash('error');
-	let params = {};
+	let params = {
+		user: req.user,
+	};
 	if (errors.length == 0) {
 		const success = req.flash('success');
 		if (success.length != 0) {

@@ -76,7 +76,10 @@ router.post('/create', async (req, res) => {
 router.get('/create', function(req, res) {
 	if (!checkLoggedIn(req, res)) return;
 
-	res.render('create_document', {error: req.flash('error')});
+	res.render('create_document', {
+		error: req.flash('error'),
+		user: req.user,
+	});
 });
 
 router.get('/view/:id', async (req, res) => {
@@ -92,7 +95,11 @@ router.get('/view/:id', async (req, res) => {
 	// Don't care if this is null. The template handles it.
 	const uploader = await userCollection.findOne({_id: document.uploader});
 
-	res.render('view_document', {document: document, uploader: uploader});
+	res.render('view_document', {
+		document: document,
+		uploader: uploader,
+		user: req.user,
+	});
 });
 
 module.exports = router;
