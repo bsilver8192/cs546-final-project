@@ -22,7 +22,7 @@ const mongoCol = require("./mongoCollections");
  *         	manufacturer
  *         	documentType
  *         	uploader
- * @return Promise->Results(Array)   
+ * @return Promise->Results(Array)
  */
 const basic_search = async(params)=>{
 	var documents = await mongoCol.document;
@@ -30,9 +30,7 @@ const basic_search = async(params)=>{
 	    	if (err) throw err;
 	    	return result;
 	  	});
-	return results;	
-		
-	
+	return results;
 }
 
 /**
@@ -44,7 +42,6 @@ const basic_search = async(params)=>{
  */
 const search = async(req)=>{
 		var search_param = {};
-		
 		console.log(req.body);
 		if(req.body == undefined){
 			console.log("ERROR, req undefined");
@@ -61,7 +58,7 @@ const search = async(req)=>{
 		}catch(error){
 			throw error;
 		}
-		
+
 		if(!results || results.length == 0){
 			throw "No Results";
 		}
@@ -97,9 +94,6 @@ const search = async(req)=>{
 		}
 
 		return output;
-		
-
-	
 }
 
 
@@ -116,7 +110,6 @@ router.post('/',async(req,res)=>{
 	}catch(error){
 		res.status(500).render('search',{error:error});
 	}
-	
 });
 
 module.exports = router;

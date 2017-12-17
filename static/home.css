@@ -13,21 +13,3 @@ main{
 	min-height:800px;
 	border-radius:10px;
 }
-nav{
-	padding:5px 0 0 0;
-	width:100%;
-
-}
-
-nav table{
-	width:300px;
-	margin:0 0 0 5%;
-}
-nav table a{
-	color:black;
-	text-decoration:none;
-	font-size:20px;
-}
-nav table a:hover{
-	color:blue;
-}

@@ -7,24 +7,15 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Create account</title>
+		<link rel="stylesheet" type="text/css" href="/static/common.css">
 		<link rel="stylesheet" type="text/css" href="/static/create_account.css">
 	</head>
 	<body>
-		
+		{{> navigation }}
 		<header>
 			<h1>Create account</h1>
 		</header>
 		<main>
-			<nav>
-			<table>
-				<tr>
-					<td><a href="/">Home</a></td>
-					<td><a href="/search">Search</a></td>
-					<td><a href="/view">View</a></td>
-					<td>{{#login}}{{.}}{{/login}}{{^login}}<a href="/account/login">Log In</a>{{/login}}</td>
-				</tr>
-			</table>
-		</nav>
 		{{#error}}
 		<section class=error>
 			{{.}}
@@ -54,7 +45,6 @@
 				<input id="go" type=submit value='Create account'>
 			</form>
 		</section>
-		{{> navigation }}
 		
 		</main>
 		<script src=/static/tota11y.min.js></script>

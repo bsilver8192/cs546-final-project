@@ -7,24 +7,12 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Log in</title>
+		<link rel="stylesheet" type="text/css" href="/static/common.css">
 		<link rel="stylesheet" type="text/css" href="/static/login.css">
 	</head>
 	<body>
-		
-		<header>
-			<h1>Log in</h1>
-		</header>
+		{{> navigation }}
 		<main>
-		<nav>
-			<table>
-				<tr>
-					<td><a href="/">Home</a></td>
-					<td><a href="/search">Search</a></td>
-					<td><a href="/view">View</a></td>
-					<td>{{#login}}{{.}}{{/login}}{{^login}}<a href="/account/login">Log In</a>{{/login}}</td>
-				</tr>
-			</table>
-		</nav>
 		{{#error}}
 		<section class=error>
 			{{.}}
@@ -32,7 +20,6 @@
 		{{/error}}
 		<section>
 			<form method=post action=login>
-				{{> navigation }}
 				<p><label>Username</label><input type=text name=username></p><br>
 				<p><label>Password</label><input type=password name=password></p><br>
 				<input id='login' type=submit value='Log in'>

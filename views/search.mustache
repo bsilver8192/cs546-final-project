@@ -7,9 +7,11 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Search</title>
+		<link rel="stylesheet" type="text/css" href="/static/common.css">
 		<link rel="stylesheet" type="text/css" href="/static/search.css">
 	</head>
 	<body>
+		{{> navigation }}
 		<header>
 			<h1>Find a document</h1>
 		</header>
@@ -25,16 +27,6 @@
 			}
 		</script>
 		<main>
-			<nav>
-			<table>
-				<tr>
-					<td><a href="/">Home</a></td>
-					<td><a href="/search">Search</a></td>
-					<td><a href="/view">View</a></td>
-					<td>{{#login}}{{.}}{{/login}}{{^login}}<a href="/account/login">Log In</a>{{/login}}</td>
-				</tr>
-			</table>
-		</nav>
 		{{#error}}
 		<section class='error'>
 			{{.}}
@@ -52,6 +44,7 @@
 			{{#results}}{{.}}{{/results}}
 		</section>
 		
+		<script src=/static/tota11y.min.js></script>
 		</main>
 	</body>
 </html>
