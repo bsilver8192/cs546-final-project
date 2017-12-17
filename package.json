@@ -4,7 +4,6 @@
   "description": "CS-546 Fall 2017 Final Project",
   "main": "app.js",
   "scripts": {
-    "test": "node test.js",
     "start": "node app.js"
   },
   "author": "Brian Silverman, Nathaniel Blakely",

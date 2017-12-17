@@ -42,3 +42,16 @@ button.favorite.selected {
 	margin: 10px auto;
 	border-radius:2px;
 }
+
+@media print {
+	.results {
+		border: none;
+		overflow: auto;
+	}
+	main {
+		border: none;
+	}
+	.favorite {
+		display: none;
+	}
+}
