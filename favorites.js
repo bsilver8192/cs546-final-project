@@ -42,7 +42,7 @@ const update_fav = async(user,id) =>{
 
 }
 
-router.get('/',function(req,res){
+router.get('/',async(req,res)=>{
 	if(!req.user){
 		res.status(403).send("");
 		return;

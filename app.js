@@ -19,6 +19,7 @@ const document = require('./document');
 
 const search = require('./search.js');
 const favorites = require('./favorites');
+const home = require('./home.js');
 
 let app = express();
 app.engine('mustache', mustacheExpress());
@@ -36,6 +37,7 @@ app.use('/static', express.static('static'));
 
 app.use('/update_favorite',favorites);
 app.use('/search',search);
+app.use('/',home);
 
 
 app.listen(3000, () => console.log('Listening on localhost:3000'));

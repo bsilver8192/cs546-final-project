@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!-- I pledge my honor that I have abided by the Stevens Honor System.
+       - Brian Silverman
+       - Nathaniel Blakely
+       - Michael Watson -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Home</title>
+		<link rel="stylesheet" type="text/css" href="/static/home.css">
+	</head>
+	<body>
+		{{#user}}
+		<header>
+			<h1>{{.}}</h1>
+		</header>
+		{{/user}}
+		<main>
+		<nav>
+			<table>
+				<tr>
+					<td><a href="/">Home</a></td>
+					<td><a href="/search">Search</a></td>
+					<td><a href="/view">View</a></td>
+					<td>{{#login}}{{.}}{{/login}}{{^login}}<a href="/account/login">log in</a>{{/slogin}}</td>
+				</tr>
+			</table>
+		</nav>
+		</main>
+	</body>
+</html>
