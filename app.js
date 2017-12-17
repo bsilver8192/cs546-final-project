@@ -18,6 +18,7 @@ const account = require('./account');
 const document = require('./document');
 
 const search = require('./search.js');
+const favorites = require('./favorites');
 
 let app = express();
 app.engine('mustache', mustacheExpress());
@@ -33,21 +34,8 @@ app.use('/account', account);
 app.use('/document', document);
 app.use('/static', express.static('static'));
 
+app.use('/update_favorite',favorites);
+app.use('/search',search);
 
-//Handlers for the search
-app.get('/search',function(req,res){
-	res.render('search',{});
-});
 
-app.post('/search',function(req,res){
-	search.search(req).then((results,error)=>{
-		if(error){
-			req.render('search',{
-				error:error
-			});
-		}else{
-			req.render('search',{results:results});
-		}
-	});
-});
 app.listen(3000, () => console.log('Listening on localhost:3000'));

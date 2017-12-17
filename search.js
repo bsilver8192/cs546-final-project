@@ -4,6 +4,11 @@
 "use strict";
 
 
+
+const express = require('express');
+const router = express.Router();
+
+
 /**
  * Returns a promise which evaluates to the search results
  * Performs a simple search. 
@@ -23,7 +28,6 @@ const basic_search = (params)=>{
 	  	mango.document.find(params).toArray(function(err, result) {
 	    	if (err) throw err;
 	    	resolve(result);
-	    	mango.close();
 	  	});
 		
 		
@@ -37,15 +41,19 @@ const basic_search = (params)=>{
  * @return Array      A promise resolving to an array of the results matching the search query or rejecting to 
  *                     an error. 
  */
-const search = (req)=>{
-	return new Promise((resolve,reject)=>{
+const search = async(req)=>{
 		var search_param = {};
-		if(req.body.hasOwnProperty("doc_type")){
+		console.log(req.body);
+		if(req.body == undefined){
+			console.log("ERROR, req undefined");
+			throw "ERROR";
+		}
+		if(req.body.doc_type){
 			search_param.documentType = req.body.doc_type;
 		}
 		search(search_param).then(results=>{
 			if(!results || results.length == 0){
-				reject("No Results");
+				throw "No Results";
 				return;
 			}
 			var matches = new Array();
@@ -57,12 +65,13 @@ const search = (req)=>{
 				}
 			}
 			if(matches.length == 0){
-				reject("No Results");
+				throw "No Results";
 			}
 			var output = "";
 			//construct the html
 			for(var i = 0;i<matches.length;i++){
 				output += "<div class=\"result\">"+
+							"<button onclick=\"handle_favorite('"+matches[i]._id+"')\">"+
 							"<p><span>Location: </span>"+matches[i].url+"</p>"+
 							"<ul>"+
 							"<li><span>Model Numbers<span></li>";
@@ -78,12 +87,29 @@ const search = (req)=>{
 
 			}
 
-			resolve(output);
+			return output;
 		});
 
-	});
+	
 }
 
-module.exports = {
-	search:search
-}
+
+router.get('/search',function(req,res){
+	res.render('search',{});
+});
+
+router.post('/search',function(req,res){
+	search(req).catch((error)=>{
+		res.status(500).render('search',{
+				error:error
+			});
+	}).then((results)=>{
+		if(error){
+			
+		}else{
+			res.render('search',{results:results});
+		}
+	});
+});
+
+module.exports = router;

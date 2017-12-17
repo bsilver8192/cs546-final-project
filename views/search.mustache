@@ -14,6 +14,17 @@
 		<header>
 			<h1>Find a document</h1>
 		</header>
+		<script>
+			function handle_favorite(id){
+				var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                     
+                    }};
+                xmlhttp.open("GET", "/update_favorite?document_id="+id, true);
+                xmlhttp.send();
+			}
+		</script>
 		<main>
 		{{#error}}
 		<section class='error'>
