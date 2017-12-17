@@ -1,5 +1,10 @@
 
-
+// I pledge my honor that I have abided by the Stevens Honor System.
+//   - Brian Silverman
+//   - Nathaniel Blakely
+//   - Michael Watson
+//
+// CS-546 Final Project
 "use strict";
 
 const express = require('express');
@@ -52,4 +57,4 @@ router.get('/update_favorite',function(req,res){
 
 
 
-module.exports = router
+module.exports = router;
