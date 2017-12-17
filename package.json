@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js"
   },
-  "author": "Brian Silverman, Nathaniel Blakely",
+  "author": "Brian Silverman, Nathaniel Blakely, Michael Watson",
   "license": "MIT",
   "private":true,
   "dependencies": {
