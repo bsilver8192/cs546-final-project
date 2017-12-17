@@ -1,4 +1,3 @@
-
 // I pledge my honor that I have abided by the Stevens Honor System.
 //   - Brian Silverman
 //   - Nathaniel Blakely
@@ -10,51 +9,56 @@
 const express = require('express');
 const router = express.Router();
 
-const users = require('./mongoCollections').user;
+const userPromise = require('./mongoCollections').user;
+const documentPromise = require('./mongoCollections').document;
 
-
-const update_fav = async(user,id) =>{
-		await users.findOne({name:user.name},function(err, result) {
-	    	if (err) throw err;
-	    	var new_favorites = new Array();
-	    	if(result.favorites.length == 0){
-	    		new_favorites.push(id);
-	    	}else{
-	    		var found = false;
-	    		for(var i = 0;i<result.favorites.length;i++){
-	    			if(result.favorites[i] == id){
-	    				found = true;
-	    				continue;
-	    			}
-	    			new_favorites.push(result.favorites[i]);
-	    		}
-	    		if(!found){
-	    			new_favorites.push(id);
-	    		}
-	    		var new_vals = {favorites:new_favorites};
-	    		users.updateOne({name:user.name},new_vals,function(err,res){
-	    			if(err) throw err;
-	    			
-	    		});
-	    	}
-	  	});
-	  	return;
-
+function checkLoggedIn(req, res) {
+	if (!req.user) {
+		req.flash('error', 'You must log in to look at favorites');
+		req.session.returnTo = '/favorites/view';
+		res.redirect('/account/login');
+		return false;
+	}
+	return true;
 }
 
-router.get('/',async(req,res)=>{
-	if(!req.user){
-		res.status(403).send("");
+router.post('/toggle/:id', async(req, res) => {
+	if (!checkLoggedIn(req, res)) return;
+
+	const user = req.user;
+	const id = req.params.id;
+	const index = user.favorites.indexOf(id);
+	if (index == -1) {
+		user.favorites.push(id);
+	} else {
+		console.log(id,index, user.favorites);
+		user.favorites.splice(index, 1);
+		console.log('after', index, user.favorites);
+	}
+	const users = await userPromise;
+	const result = await users.updateOne({_id: user._id}, user);
+	if (result.modifiedCount != 1) {
+		req.flash('error', 'Unknown error');
 		return;
 	}
-	try{
-		await update_fav(req.user,req.query.document_id);
-		res.status(200).send("success");
-	}catch(error){
-		res.status(500).send(error);
-	}
+	res.sendStatus(200);
 });
 
+router.get('/view', async(req, res) => {
+	if (!checkLoggedIn(req, res)) return;
 
+	const documents = await documentPromise;
+	let results = [];
+	for (let id of req.user.favorites) {
+		const document = await documents.findOne({_id: id});
+		if (!document) continue;
+		document.classes = 'favorite selected';
+		results.push(document);
+	}
+	res.render('view_favorites', {
+		results: results,
+		user: req.user,
+	});
+});
 
 module.exports = router;

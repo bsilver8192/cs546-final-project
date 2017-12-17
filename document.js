@@ -95,10 +95,18 @@ router.get('/view/:id', async (req, res) => {
 	// Don't care if this is null. The template handles it.
 	const uploader = await userCollection.findOne({_id: document.uploader});
 
+	let classes;
+	if (req.user && req.user.favorites.indexOf(document._id) != -1) {
+		classes = 'favorite selected';
+	} else {
+		classes = 'favorite';
+	}
+
 	res.render('view_document', {
 		document: document,
 		uploader: uploader,
 		user: req.user,
+		classes: classes,
 	});
 });
 

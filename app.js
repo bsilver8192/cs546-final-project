@@ -34,10 +34,8 @@ app.use(passport.session());
 app.use('/account', account);
 app.use('/document', document);
 app.use('/static', express.static('static'));
-
-app.use('/update_favorite',favorites);
+app.use('/favorites',favorites);
 app.use('/search',search);
 app.use('/',home);
-
 
 app.listen(3000, () => console.log('Listening on localhost:3000'));

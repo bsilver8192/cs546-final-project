@@ -91,6 +91,7 @@ async function doCreateAccount(req, res) {
 		name: form.name,
 		username: form.username,
 		hashedPassword: await bcrypt.hash(form.password, 16),
+		favorites: [],
 	};
 	const r = await userCollection.insertOne(user);
 	if (r.insertedCount != 1) {

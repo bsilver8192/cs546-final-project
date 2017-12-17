@@ -8,6 +8,7 @@
 		<meta charset="utf-8">
 		<title>View document</title>
 		<link rel="stylesheet" type="text/css" href="/static/common.css">
+		<script src=/static/favorites.js></script>
 	</head>
 	<body>
 		{{> navigation }}
@@ -25,6 +26,11 @@
 		<section>
 			This document was uploaded by {{uploader.name}}.
 		</section>
+		{{#user}}
+		<section>
+			<button onclick="handle_favorite('{{document._id}}', this)" class='{{classes}}'></button>
+		</section>
+		{{/user}}
 		</main>
 		<script src=/static/tota11y.min.js></script>
 	</body>

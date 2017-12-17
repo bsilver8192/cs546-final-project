@@ -14,19 +14,6 @@ main{
 	border-radius:10px;
 }
 
-section.search{
-
-}
-
 form{
 	text-align:center;
-}
-
-section.results{
-	border:1px solid #222;
-	width:90%;
-	height:700px;
-	overflow-y: scroll;
-	margin: 10px auto;
-	border-radius:2px;
 }

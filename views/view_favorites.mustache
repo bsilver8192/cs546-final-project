@@ -6,7 +6,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Search</title>
+		<title>{{user.name}}'s favorites</title>
 		<link rel="stylesheet" type="text/css" href="/static/common.css">
 		<link rel="stylesheet" type="text/css" href="/static/search.css">
 		<script src=/static/favorites.js></script>
@@ -14,21 +14,9 @@
 	<body>
 		{{> navigation }}
 		<header>
-			<h1>Find a document</h1>
+			<h1>{{user.name}}'s favorites</h1>
 		</header>
 		<main>
-		{{#error}}
-		<section class='error'>
-			{{.}}
-		</section>
-		{{/error}}
-		<section class='search'>
-			<form method='POST' action='search'>
-				<label>Part Number <input type='text' name='part_no'></label>
-				<label>Document Type <input type='text' name='doc_type'></label>
-				<input type='submit' value='Search'>
-			</form>
-		</section>
 		
 		<section class='results'>
 		{{#results}}
@@ -40,7 +28,7 @@
 		</div>
 		{{/results}}
 		{{^results}}
-		No results. Please enter another search.
+		You have no favorites.
 		{{/results}}
 		</section>
 		

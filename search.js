@@ -6,11 +6,10 @@
 // CS-546 Final Project
 "use strict";
 
-
-
 const express = require('express');
 const router = express.Router();
 const mongoCol = require("./mongoCollections");
+const userPromise = require('./mongoCollections').user;
 
 /**
  * Returns a promise which evaluates to the search results
@@ -26,11 +25,7 @@ const mongoCol = require("./mongoCollections");
  */
 const basic_search = async(params)=>{
 	var documents = await mongoCol.document;
-	var results = await documents.find(params).toArray(function(err, result) {
-	    	if (err) throw err;
-	    	return result;
-	  	});
-	return results;
+	return await documents.find(params).toArray();
 }
 
 /**
@@ -41,74 +36,56 @@ const basic_search = async(params)=>{
  *                     an error. 
  */
 const search = async(req)=>{
-		var search_param = {};
-		console.log(req.body);
-		if(req.body == undefined){
-			console.log("ERROR, req undefined");
-			var stack = new Error().stack;
-			console.log(stack);
-			throw "ERROR";
-		}
-		if(req.body.doc_type){
+		let search_param = {};
+		if(req.body.doc_type != ''){
 			search_param.documentType = req.body.doc_type;
 		}
-		var results;
-		try{
-			results = await basic_search(search_param);
-		}catch(error){
-			throw error;
-		}
+		const results = await basic_search(search_param);
 
-		if(!results || results.length == 0){
-			throw "No Results";
-		}
-		var matches = new Array();
-		for(var i = 0;i<results.length;i++){
-			for(var j = 0;j<results[i].model_numbers.length;j++){
-				if(results[i].model_numbers[j] == req.body.part_no){
-					matches.push(results[i]);
+		let matches = new Array();
+		for(let i = 0;i<results.length;i++){
+			if (req.body.part_no == '') {
+				matches.push(results[i]);
+			} else {
+				for(var j = 0;j<results[i].model_numbers.length;j++){
+					if(req.body.part_no == '' || results[i].model_numbers[j] == req.body.part_no){
+						matches.push(results[i]);
+						break;
+					}
 				}
 			}
 		}
-		if(matches.length == 0){
-			throw "No Results";
-		}
-		var output = "";
-		//construct the html
-		for(var i = 0;i<matches.length;i++){
-			output += "<div class=\"result\">"+
-						"<button onclick=\"handle_favorite('"+matches[i]._id+"')\">"+
-						"<p><span>Location: </span>"+matches[i].url+"</p>"+
-						"<ul>"+
-						"<li><span>Model Numbers<span></li>";
-			for(var j = 0;j<matches[i].model_numbers.length;j++){
-				output += "<li>"+ matches[i].model_numbers[j]+"</li>";
-
+		for (let i = 0; i < matches.length; ++i) {
+			if (req.user && req.user.favorites.indexOf(matches[i]._id) != -1) {
+				matches[i].classes = 'favorite selected';
+			} else {
+				matches[i].classes = 'favorite';
 			}
-			output +=	"</ul>"+
-						"<p><span>Manufacturer: </span>"+matches[i].manufacturer+"</p>"+
-					 	"<p><span>Document Type: </span>"+matches[i].documentType+"</p>"+
-					 	"<p><span>Uploader: </span>" + matches[i].uploader +"</p>"+
-					 +"</div>";
-
 		}
-
-		return output;
+		return matches;
 }
 
 
 router.get('/',function(req,res){
-	res.render('search',{});
+	res.render('search', {
+		results: [],
+		user: req.user,
+	});
 });
 
 router.post('/',async(req,res)=>{
 	var response;
-	console.log("POST reply has been called");
 	try{
 		response = await search(req);
-		res.render('search',{results:response});
+		res.render('search',{
+			results:response,
+			user: req.user,
+		});
 	}catch(error){
-		res.status(500).render('search',{error:error});
+		res.status(500).render('search',{
+			error:error,
+			user: req.user,
+		});
 	}
 });
 
