@@ -5,7 +5,15 @@ const router = express.Router();
 
 
 router.get('/',function(req,res){
-	res.render('home',{});
+	let msg = "";
+	if(req.user){
+		msg = "Welcome, " + req.user.name;
+		
+	}else{
+		msg = "Welcome, guest"
+	}
+	res.render('home',{user:msg});
+	
 });
 
 

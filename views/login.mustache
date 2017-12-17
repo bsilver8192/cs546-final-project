@@ -7,13 +7,24 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Log in</title>
+		<link rel="stylesheet" type="text/css" href="/static/login.css">
 	</head>
 	<body>
-		{{> navigation }}
+		
 		<header>
 			<h1>Log in</h1>
 		</header>
 		<main>
+		<nav>
+			<table>
+				<tr>
+					<td><a href="/">Home</a></td>
+					<td><a href="/search">Search</a></td>
+					<td><a href="/view">View</a></td>
+					<td>{{#login}}{{.}}{{/login}}{{^login}}<a href="/account/login">Log In</a>{{/login}}</td>
+				</tr>
+			</table>
+		</nav>
 		{{#error}}
 		<section class=error>
 			{{.}}
@@ -21,15 +32,17 @@
 		{{/error}}
 		<section>
 			<form method=post action=login>
-				<label>Username <input type=text name=username></label>
-				<label>Password <input type=password name=password></label>
-				<input type=submit value='Log in'>
+				{{> navigation }}
+				<p><label>Username</label><input type=text name=username></p><br>
+				<p><label>Password</label><input type=password name=password></p><br>
+				<input id='login' type=submit value='Log in'>
+				
+				<section>If you don't already have one, please
+					<a href=create>create an account</a>.
+				</section>
 			</form>
 		</section>
-		<section>
-			If you don't already have one, please
-			<a href=create>create an account</a>.
-		</section>
+		
 		</main>
 		<script src=/static/tota11y.min.js></script>
 	</body>

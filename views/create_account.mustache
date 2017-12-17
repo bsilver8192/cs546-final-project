@@ -7,40 +7,55 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Create account</title>
+		<link rel="stylesheet" type="text/css" href="/static/create_account.css">
 	</head>
 	<body>
-		{{> navigation }}
+		
 		<header>
 			<h1>Create account</h1>
 		</header>
 		<main>
+			<nav>
+			<table>
+				<tr>
+					<td><a href="/">Home</a></td>
+					<td><a href="/search">Search</a></td>
+					<td><a href="/view">View</a></td>
+					<td>{{#login}}{{.}}{{/login}}{{^login}}<a href="/account/login">Log In</a>{{/login}}</td>
+				</tr>
+			</table>
+		</nav>
 		{{#error}}
 		<section class=error>
 			{{.}}
 		</section>
 		{{/error}}
+
 		{{#success}}
 		<section class=success>
 			{{.}} Please <a href=login>Log in</a> now.
 		</section>
 		{{/success}}
-		<section>
-			Creating an account will allow you to add documents, keep track of
-			your favorite documents, and identify you to other users.
-		</section>
+		
 		<section>
 			<form method=post action=create>
-				<label>Full name <input type=text name=name></label>
-				<label>Username <input type=text name=username></label>
-				<label>Password <input type=password name=password></label>
-				<label>Confirm password <input type=password name=confirm_password></label>
-				<input type=submit value='Create account'>
+				<section class='info'>
+					If you already have an account, please <a href=login>log in</a>
+					instead.
+				</section>
+				<section>
+					Creating an account will allow you to add documents, keep track of
+					your favorite documents, and identify you to other users.
+				</section>
+				<p><label>Full name <input type=text name=name></label></p>
+				<p><label>Username <input type=text name=username></label></p>
+				<p><label>Password <input type=password name=password></label></p>
+				<p><label>Confirm password <input type=password name=confirm_password></label></p>
+				<input id="go" type=submit value='Create account'>
 			</form>
 		</section>
-		<section>
-			If you already have an account, please <a href=login>log in</a>
-			instead.
-		</section>
+		{{> navigation }}
+		
 		</main>
 		<script src=/static/tota11y.min.js></script>
 	</body>

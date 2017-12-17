@@ -7,8 +7,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Search</title>
-		<style>
-		</style>
+		<link rel="stylesheet" type="text/css" href="/static/search.css">
 	</head>
 	<body>
 		<header>
@@ -26,23 +25,33 @@
 			}
 		</script>
 		<main>
+			<nav>
+			<table>
+				<tr>
+					<td><a href="/">Home</a></td>
+					<td><a href="/search">Search</a></td>
+					<td><a href="/view">View</a></td>
+					<td>{{#login}}{{.}}{{/login}}{{^login}}<a href="/account/login">Log In</a>{{/login}}</td>
+				</tr>
+			</table>
+		</nav>
 		{{#error}}
 		<section class='error'>
 			{{.}}
 		</section>
 		{{/error}}
-		<section>
+		<section class='search'>
 			<form method='POST' action='search'>
-				<p><label>Part Number</label><input type='text' name='part_no' required='required'></p>
-				<p><label>Document Type</label><input type='text' name='doc_type'></p>
+				<label>Part Number</label>&nbsp;<input type='text' name='part_no' required='required'>&nbsp;
+				<label>Document Type</label>&nbsp;<input type='text' name='doc_type'>&nbsp;
 				<input type='submit' value='Search'>
 			</form>
 		</section>
-		{{#results}}
+		
 		<section class='results'>
-			{{.}}
+			{{#results}}{{.}}{{/results}}
 		</section>
-		{{/results}}
+		
 		</main>
 	</body>
 </html>

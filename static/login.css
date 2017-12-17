@@ -1,0 +1,77 @@
+*{
+	margin:0;
+	padding:0;
+}
+h1{
+	text-align: center;
+}
+
+main{
+	width:80%;
+	border:1px solid black;
+	margin:auto;
+	min-height:800px;
+	border-radius:10px;
+}
+nav{
+	padding:5px 0 0 0;
+	width:100%;
+
+}
+
+nav table{
+	width:300px;
+	margin:0 0 0 5%;
+}
+nav table a{
+	color:black;
+	text-decoration:none;
+	font-size:20px;
+}
+nav table a:hover{
+	color:blue;
+}
+
+form{
+	width:400px;
+	height:200px;
+	margin:auto;
+	position:absolute;
+	top:0;bottom:0;right:0;left:0;
+	border:1px solid black;
+	border-radius:5px;
+	text-align:right;
+}
+form section{
+	position:absolute;
+	bottom:5px;
+	margin-left:20px;
+}
+form label{
+
+}
+form input{
+	margin-left:6px;
+}
+form p{
+	text-align:right;
+	width:272px;
+	display:block;
+	margin:auto;
+}
+
+#navigation{
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+#login{
+	margin:0 0 0 0;
+	padding:3px 5px 3px 5px;
+	display:block;
+	margin:auto;
+}
+
+#login:hover{
+	cursor:pointer;
+}
