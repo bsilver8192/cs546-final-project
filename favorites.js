@@ -13,9 +13,8 @@ const router = express.Router();
 const users = require('./mongoCollections').user;
 
 
-const update_fav = (user,id)=>{
-	return new Promise((resolve,reject)=>{
-		users.findOne({name:user.name},function(err, result) {
+const update_fav = async(user,id) =>{
+		await users.findOne({name:user.name},function(err, result) {
 	    	if (err) throw err;
 	    	var new_favorites = new Array();
 	    	if(result.favorites.length == 0){
@@ -34,25 +33,26 @@ const update_fav = (user,id)=>{
 	    		}
 	    		var new_vals = {favorites:new_favorites};
 	    		users.updateOne({name:user.name},new_vals,function(err,res){
-	    			if(err) reject(err);
-	    			resolve(res);
+	    			if(err) throw err;
+	    			
 	    		});
 	    	}
 	  	});
-	});
+	  	return;
+
 }
 
-router.get('/update_favorite',function(req,res){
+router.get('/',function(req,res){
 	if(!req.user){
 		res.status(403).send("");
 		return;
 	}
-	update_fav(req.user,req.query.document_id).then((success)=>{
+	try{
+		await update_fav(req.user,req.query.document_id);
 		res.status(200).send("success");
-	}).catch((error)=>{
+	}catch(error){
 		res.status(500).send(error);
-	});
-
+	}
 });
 
 
