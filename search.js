@@ -48,7 +48,7 @@ const search = async(req)=>{
 				matches.push(results[i]);
 			} else {
 				for(var j = 0;j<results[i].model_numbers.length;j++){
-					if(req.body.part_no == '' || results[i].model_numbers[j] == req.body.part_no){
+					if(results[i].model_numbers[j] == req.body.part_no){
 						matches.push(results[i]);
 						break;
 					}

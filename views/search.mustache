@@ -33,9 +33,7 @@
 		<section class='results'>
 		{{#results}}
 		<div class=result>
-			{{#user}}
 			<button onclick="handle_favorite('{{_id}}', this)" class='{{classes}}'></button>
-			{{/user}}
 			<a href='/document/view/{{_id}}'>{{manufacturer}} {{documentType}}</a>
 		</div>
 		{{/results}}

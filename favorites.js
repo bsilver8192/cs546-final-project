@@ -31,9 +31,7 @@ router.post('/toggle/:id', async(req, res) => {
 	if (index == -1) {
 		user.favorites.push(id);
 	} else {
-		console.log(id,index, user.favorites);
 		user.favorites.splice(index, 1);
-		console.log('after', index, user.favorites);
 	}
 	const users = await userPromise;
 	const result = await users.updateOne({_id: user._id}, user);
@@ -49,8 +47,8 @@ router.get('/view', async(req, res) => {
 
 	const documents = await documentPromise;
 	let results = [];
-	for (let id of req.user.favorites) {
-		const document = await documents.findOne({_id: id});
+	for (let i = 0; i < req.user.favorites.length; ++i) {
+		const document = await documents.findOne({_id: req.user.favorites[i]});
 		if (!document) continue;
 		document.classes = 'favorite selected';
 		results.push(document);
